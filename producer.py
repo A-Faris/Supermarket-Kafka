@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import sys
+import json
 from random import choice, randrange
 from argparse import ArgumentParser, FileType
 from configparser import ConfigParser
@@ -44,7 +45,7 @@ if __name__ == "__main__":
         id = randrange(1, 14)
         machine_type = choice(machine)
         machine_id = machine_type + "_" + str(id)
-        temperature = '{ "id:" "' + str(id) + '", "temp": "' + str(randrange(-10, 3)) + '°c"' + " }"
+        temperature = json.dumps({ "id:" str(id), "temp": str(randrange(-10, 3)) + '°c'})
         producer.produce(topic, temperature, machine_id, callback=delivery_callback)
 
     while True:
