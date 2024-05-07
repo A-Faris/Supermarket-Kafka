@@ -1,12 +1,14 @@
+"""Producer"""
 #!/usr/bin/env python
 
 import sys
 import json
+import sched
+import time
 from random import choice, randrange
 from argparse import ArgumentParser, FileType
 from configparser import ConfigParser
 from confluent_kafka import Producer
-import sched, time
 
 
 if __name__ == "__main__":
@@ -28,8 +30,9 @@ if __name__ == "__main__":
     # when a message has been successfully delivered or permanently
     # failed delivery (after retries).
     def delivery_callback(err, msg):
+        """Delivery callback"""
         if err:
-            print("ERROR: Message failed delivery: {}".format(err))
+            print(f"ERROR: Message failed delivery: {err}")
         else:
             print(
                 "Produced event to topic {topic}: key = {key:12} value = {value:12}".format(
@@ -45,8 +48,10 @@ if __name__ == "__main__":
         id = randrange(1, 14)
         machine_type = choice(machine)
         machine_id = machine_type + "_" + str(id)
-        temperature = json.dumps({ "id": str(id), "temp": str(randrange(-10, 3)) + '°c'})
-        producer.produce(topic, temperature, machine_id, callback=delivery_callback)
+        temperature = json.dumps(
+            {"id": str(id), "type": machine_type, "temp": str(randrange(-10, 3)) + '°c'})
+        producer.produce(topic, temperature, machine_id,
+                         callback=delivery_callback)
 
     while True:
         produce_event()

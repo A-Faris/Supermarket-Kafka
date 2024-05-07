@@ -1,3 +1,4 @@
+"""Consumer"""
 #!/usr/bin/env python
 
 import sys
@@ -24,14 +25,15 @@ if __name__ == "__main__":
 
     # Set up a callback to handle the '--reset' flag.
     def reset_offset(consumer, partitions):
+        """Reset offset"""
         if args.reset:
             for p in partitions:
                 p.offset = OFFSET_BEGINNING
             consumer.assign(partitions)
 
     # Subscribe to topic
-    topic = "supermarket"
-    consumer.subscribe([topic], on_assign=reset_offset)
+    TOPIC = "supermarket"
+    consumer.subscribe([TOPIC], on_assign=reset_offset)
 
     # Task: Poll for new messages from Kafka and print them.
     #
@@ -41,6 +43,7 @@ if __name__ == "__main__":
     try:
         while True:
             # Write code here to get messages from Kafka
+            consumer.poll(1.0)
     except KeyboardInterrupt:
         pass
     finally:
