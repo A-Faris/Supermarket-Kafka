@@ -1,10 +1,10 @@
 """Consumer"""
 #!/usr/bin/env python
 
-import sys
 import json
 from argparse import ArgumentParser, FileType
 from configparser import ConfigParser
+
 from confluent_kafka import Consumer, OFFSET_BEGINNING, KafkaException
 
 if __name__ == "__main__":

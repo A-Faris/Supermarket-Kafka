@@ -1,4 +1,4 @@
-# kafka-supermarket
+# Kafka Supermarket
 
 A locally-running Kafka cluster 
 

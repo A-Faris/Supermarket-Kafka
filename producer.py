@@ -1,13 +1,12 @@
 """Producer"""
 #!/usr/bin/env python
 
-import sys
 import json
-import sched
 import time
 from random import choice, randrange
 from argparse import ArgumentParser, FileType
 from configparser import ConfigParser
+
 from confluent_kafka import Producer
 
 
